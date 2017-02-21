@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+curl \
+  -X POST \
+  --data-urlencode data@tests/data/cs_001.data \
+  http://localhost:8000/run
