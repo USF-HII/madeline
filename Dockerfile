@@ -39,6 +39,6 @@ RUN pip install -r requirements.txt
 
 ADD . .
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["python", "app.py"]

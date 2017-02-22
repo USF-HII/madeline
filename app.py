@@ -4,6 +4,7 @@ import subprocess
 import uuid
 
 import flask
+import jinja2
 
 def cli(cmd_args, timeout=None):
     result = {}
@@ -45,7 +46,9 @@ app.config['JSON_AS_ASCII'] = False
 
 @app.route("/", methods=['GET'])
 def route_route():
-    return "Coming soon"
+    with open('templates/index2.html.j2') as f:
+        template = jinja2.Template(f.read())
+    return template.render()
 
 @app.route("/version", methods=['GET'])
 def route_version():
@@ -57,6 +60,7 @@ def route_run():
 
     work_dir = 'tmp/{job_id}'.format(job_id=job_id)
     data_file = os.path.join(work_dir, job_id + '.txt')
+    output_prefix = os.path.join(work_dir, 'output')
 
     os.makedirs(work_dir)
 
@@ -64,7 +68,7 @@ def route_run():
         f.write(flask.request.form['data'])
 
     try:
-        result = cli(['madeline2', data_file], timeout=30)
+        result = cli(['madeline2', '--outputprefix', output_prefix, data_file], timeout=30)
         cli(['touch', '{}.done'.format(work_dir)])
     except:
         cli(['touch', '{}.failed'.format(work_dir)])
@@ -73,5 +77,5 @@ def route_run():
 
 if __name__ == "__main__":
     app.run(host=os.environ.get('APP_HOST', '0.0.0.0'),
-            port=os.environ.get('APP_PORT', '8000'))
+            port=os.environ.get('APP_PORT', '80'))
 
