@@ -20,12 +20,14 @@ def cli(cmd_args, timeout=None):
         result['status'] = 'error'
         result['message'] = str(e)
         result['output'] = e.output.decode(decode_method)
+        raise
 
     except subprocess.TimeoutExpired as e:
         message = 'subprocess.check_output({cmd_args}, timeout={timeout}) threw exception TimeoutExpired'
         result['status'] = 'error'
         result['message'] = message.format(cmd_args=cmd_args, timeout=timeout)
         result['output'] = e.output.decode(decode_method)
+        raise
 
     logging.info('cli.result: %s' % result)
 
@@ -39,7 +41,7 @@ logging.basicConfig(level=logging.INFO)
 
 app =  flask.Flask(__name__)
 
-app.config['JSON_AS_ASCII'] = True
+app.config['JSON_AS_ASCII'] = False
 
 @app.route("/", methods=['GET'])
 def route_route():
@@ -49,7 +51,7 @@ def route_route():
 def route_version():
     return cli(['cat', 'madeline-version.txt'])['output']
 
-@app.route("/run", methods=['POST'])
+@app.route("/submit", methods=['POST'])
 def route_run():
     job_id = str(uuid.uuid4())
 
@@ -61,10 +63,15 @@ def route_run():
     with open(data_file, 'w') as f:
         f.write(flask.request.form['data'])
 
-    result = cli(['madeline2', data_file], timeout=30)
+    try:
+        result = cli(['madeline2', data_file], timeout=30)
+        cli(['touch', '{}.done'.format(work_dir)])
+    except:
+        cli(['touch', '{}.failed'.format(work_dir)])
 
     return flask.jsonify(result)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='8000')
+    app.run(host=os.environ.get('APP_HOST', '0.0.0.0'),
+            port=os.environ.get('APP_PORT', '8000'))
 
