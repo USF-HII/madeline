@@ -75,6 +75,9 @@ def route_run():
 
     return flask.jsonify(result)
 
+@app.route("/help", methods=['GET']):
+    pass
+
 if __name__ == "__main__":
     app.run(host=os.environ.get('APP_HOST', '0.0.0.0'),
             port=os.environ.get('APP_PORT', '80'))
