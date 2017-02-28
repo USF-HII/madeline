@@ -1,9 +1,7 @@
-# Madeline Pedigree Drawing Engine Service
+# Madeline Pedigree Drawing Engine Web Service
 
 Web service to generate pedigree diagrams utilizing the
 Madeline 2.0 Pedigree Drawing Engine (http://madeline.med.umich.edu/madeline).
-
-/madeline/testdata/
 
 ## API
 
@@ -54,9 +52,9 @@ Submit data and command line arguments to render a pedigree diagram
 
 Parameters:
 
-    data - The text or XML for madeline to use as input to render the diagram
+- `data` - The text or XML for madeline to use as input to render the diagram
 
-    args - Command line arguments to pass to the madeline PDE binary
+- `args` - Command line arguments to pass to the madeline PDE binary
 
 Response (Success):
 
@@ -76,7 +74,7 @@ Response (Error):
 
 Example:
 
-*Note: Test data available at http://madeline.med.umich.edu/madeline/testdata/*
+*Note: Test data available at:* http://madeline.med.umich.edu/madeline/testdata/
 
     $ cat cs_001.data
 
@@ -97,8 +95,7 @@ Example:
     m112	cs_001	m	m105	m106
 
 
-    $ curl -X POST --data-urlencode data@cs_001.data http://<app>/submit
-
+    $ curl -X POST --data-urlencode args="--color" --data-urlencode data@cs_001.data http://localhost/submit
 
 
 

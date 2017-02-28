@@ -7,7 +7,12 @@ run_build() {
 run_container() {
   docker rm --force --volumes ${CONTAINER_NAME} &> /dev/null
 
-  cid=$(docker run --rm --detach --publish-all --name=${CONTAINER_NAME} ${IMAGE_NAME}:latest)
+  cid=$(docker run --rm --detach --publish 8000:80 --name=${CONTAINER_NAME} ${IMAGE_NAME}:latest)
+
+  if [[ $? -ne 0 ]]; then
+    docker run --rm --publish-all --name=${CONTAINER_NAME} ${IMAGE_NAME}:latest
+    exit $?
+  fi
 
   sleep 2
 
@@ -17,7 +22,12 @@ run_container() {
 run_test_submit() {
   port=$(docker port ${CONTAINER_NAME} | awk '{print $NF}' | awk -F: '{print $2}')
 
-  echo curl -X POST --data-urlencode data@tests/data/cs_001.data http://localhost:${port}/submit | bash -x
+
+  echo curl \
+    -X POST \
+    --data-urlencode args="--color" \
+    --data-urlencode data@tests/data/cs_001.data http://localhost:${port}/submit \
+    | bash -x
 
   if [[ $? -ne 0 ]]; then
     echo docker logs ${CONTAINER_NAME} | bash -x
@@ -27,6 +37,7 @@ run_test_submit() {
 
 run_test_version() {
   port=$(docker port ${CONTAINER_NAME} | awk '{print $NF}' | awk -F: '{print $2}')
+
   echo curl http://localhost:${port}/version | bash -x
 }
 
@@ -37,6 +48,9 @@ IMAGE_NAME=madeline
 case $1 in
   build)
     run_build
+    ;;
+  container)
+    run_container
     ;;
   test)
     run_build

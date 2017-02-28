@@ -21,14 +21,15 @@ def cli(cmd_args, timeout=None):
         result['status'] = 'error'
         result['message'] = str(e)
         result['output'] = e.output.decode(decode_method)
-        raise
 
     except subprocess.TimeoutExpired as e:
         message = 'subprocess.check_output({cmd_args}, timeout={timeout}) threw exception TimeoutExpired'
         result['status'] = 'error'
         result['message'] = message.format(cmd_args=cmd_args, timeout=timeout)
         result['output'] = e.output.decode(decode_method)
-        raise
+
+    except:
+        result['status'] = 'error'
 
     logging.info('cli.result: %s' % result)
 
@@ -46,7 +47,7 @@ app.config['JSON_AS_ASCII'] = False
 
 @app.route("/", methods=['GET'])
 def route_route():
-    with open('templates/index2.html.j2') as f:
+    with open('templates/index.html.j2') as f:
         template = jinja2.Template(f.read())
     return template.render()
 
@@ -67,16 +68,24 @@ def route_run():
     with open(data_file, 'w') as f:
         f.write(flask.request.form['data'])
 
-    try:
-        result = cli(['madeline2', '--outputprefix', output_prefix, data_file], timeout=30)
-        cli(['touch', '{}.done'.format(work_dir)])
-    except:
-        cli(['touch', '{}.failed'.format(work_dir)])
+    args = flask.request.form.get('args', '')
+
+    result = cli(['madeline2', args, '--outputprefix', output_prefix, data_file], timeout=30)
+
+    if result['status'] == 'success':
+        with open(output_prefix + '.svg') as f:
+            result['svg'] = f.read()
 
     return flask.jsonify(result)
 
-@app.route("/help", methods=['GET']):
-    pass
+@app.route("/help", methods=['GET'])
+def route_help():
+    with open('templates/help.html.j2') as f:
+        template = jinja2.Template(f.read())
+
+    help_message  = cli(['madeline2', '--help'])['output']
+
+    return template.render(help_message=help_message)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get('APP_HOST', '0.0.0.0'),
