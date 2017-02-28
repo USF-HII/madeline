@@ -23,11 +23,12 @@ run_test_submit() {
   port=$(docker port ${CONTAINER_NAME} | awk '{print $NF}' | awk -F: '{print $2}')
 
 
-  echo curl \
+  curl \
     -X POST \
-    --data-urlencode args="--color" \
-    --data-urlencode data@tests/data/cs_001.data http://localhost:${port}/submit \
-    | bash -x
+    --data-urlencode data@tests/data/cs_001.data http://localhost:${port}/submit
+
+    #--custom-icon-colors 'ALS=red,PLS=purple,PMA=blue,HSP=green;A=black;FTD=black,Non-FTD=lightgray;A=black'" \
+    #--data-urlencode args="--color --nolabeltruncation" \
 
   if [[ $? -ne 0 ]]; then
     echo docker logs ${CONTAINER_NAME} | bash -x

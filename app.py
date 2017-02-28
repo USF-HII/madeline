@@ -70,7 +70,14 @@ def route_run():
 
     args = flask.request.form.get('args', '')
 
-    result = cli(['madeline2', args, '--outputprefix', output_prefix, data_file], timeout=30)
+    if len(args) > 1:
+        command = ['madeline2', args, '--outputprefix', output_prefix, data_file]
+    else:
+        command = ['madeline2', '--outputprefix', output_prefix, data_file]
+
+    result = cli(command, timeout=30)
+
+    result['command'] = command
 
     if result['status'] == 'success':
         with open(output_prefix + '.svg') as f:
