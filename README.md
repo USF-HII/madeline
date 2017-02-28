@@ -2,7 +2,9 @@
 
 ## API
 
-### Version (GET)
+---
+
+### Version
 
 Returns version (Github Commit SHA and Date) of compiled madeline PDE binary.
 
@@ -33,13 +35,13 @@ Example:
 
 ---
 
-### Submit (POST)
+### Submit
 
 Submit data and command line arguments to render a pedigree diagram
 
 #### URL
 
-http://<app>/submit
+    http://<app>/submit
 
 #### Methods
 
@@ -66,8 +68,3 @@ Response (Error):
       'output': <cli_output>,
       'reason': error|timeout
     }
-
-### Get Madeline PDE Job Results
-
-- `http://<app>/get/<job_id>`
-  - GET
