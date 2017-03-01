@@ -100,7 +100,7 @@ Example:
     $ cat madeline/data/request-with-tsv.json
     {
       "args": [ "--color", "--noiconlabels" ],
-      "data": "Individualid\tFamilyid\tGender\tMother\tFather\nm100\tcs_001\tm\t.\t.\nm101\tcs_001\tf\t.\t.\nm102\tcs_001\tm\tm101\tm100\nm103\tcs_001\tf\tm101\tm100\n"
+      "data": "Individualid\tFamilyid\tGender\tMother\tFather\nm100\tcs_001\tm\t.\t.\nm101\tcs_001\tf\t...etc."
     }
 
 
