@@ -44,6 +44,7 @@ logging.basicConfig(level=logging.INFO)
 app =  flask.Flask(__name__)
 
 app.config['JSON_AS_ASCII'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True
 
 @app.route("/", methods=['GET'])
 def route_route():
@@ -63,15 +64,18 @@ def route_run():
     data_file = os.path.join(work_dir, job_id + '.txt')
     output_prefix = os.path.join(work_dir, 'output')
 
+
     os.makedirs(work_dir)
 
-    with open(data_file, 'w') as f:
-        f.write(flask.request.form['data'])
+    json_data = flask.request.get_json(force=True)
 
-    args = flask.request.form.get('args', '')
+    with open(data_file, 'w') as f:
+        f.write(json_data.get('data', ''))
+
+    args = json_data.get('args', [])
 
     if len(args) > 1:
-        command = ['madeline2', args, '--outputprefix', output_prefix, data_file]
+        command = ['madeline2', *args, '--outputprefix', output_prefix, data_file]
     else:
         command = ['madeline2', '--outputprefix', output_prefix, data_file]
 
