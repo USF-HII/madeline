@@ -8,9 +8,7 @@ RUN pwd
 
 RUN mkdir /app
 
-RUN apt-get update
-
-RUN apt-get install -y gettext
+RUN apt-get update && apt-get install -y gettext vim
 
 WORKDIR /build
 
@@ -38,7 +36,5 @@ ADD requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 ADD . .
-
-EXPOSE 5000
 
 CMD ["python", "app.py"]

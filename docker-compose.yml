@@ -1,18 +1,23 @@
 version: "3"
 
 services:
-  madeline-service:
-    build: madeline/service
-    image: madeline-service
-    command: python app.py
+  app:
+    build: madeline
+    image: madeline
+    container_name: madeline-app
+    command: gunicorn --bind 0.0.0.0:5000 --workers 8 server:app
     ports:
-     - "5000:5000"
+      - "5000:5000"
     environment:
-     - APP=madeline-service
+      - APP=madeline-app
 
-  madeline-client:
-    build: madeline/client
-    image: madeline-client
+  client:
+    image: madeline
+    container_name: madeline-client
     command: tail -f /dev/null
+    links:
+      - app
     environment:
-     - APP=madeline-client
+      - APP=madeline-client
+    depends_on:
+      - app

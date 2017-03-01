@@ -54,29 +54,31 @@ Parameters:
 
 - `data` - The text or XML for madeline to use as input to render the diagram
 
-- `args` - Command line arguments to pass to the madeline PDE binary
+- `args` - List of command line arguments to pass to the madeline PDE binary
 
 Response (Success):
 
     {
       'status': 'success',
-      'output': <cli_output>,
-      'svg': <svg_data>
+      'svg': <svg_data>,
+      'command': <command>,
+      'command_output': <command_output>
     }
 
 Response (Error):
 
     {
       'status': 'error',
-      'output': <cli_output>,
-      'reason': <reason_code> (error|timeout)
+      'reason': <reason_code>,
+      'command': <command>,
+      'command_output': <command_output>
     }
 
 Example:
 
 *Note: Test data available at:* http://madeline.med.umich.edu/madeline/testdata/
 
-    $ cat cs_001.data
+    $ cat madeline/data/cs_001.data
 
     Individualid	Familyid	Gender	Mother	Father
     m100	cs_001	m	.	.
@@ -95,7 +97,16 @@ Example:
     m112	cs_001	m	m105	m106
 
 
-    $ curl -X POST --data-urlencode args="--color" --data-urlencode data@cs_001.data http://localhost/submit
+    $ json_escape() { printf '%s' $1 | python -c 'import json,sys; print(json.dumps(sys.stdin.read()))'; }
+
+    $ echo "'args': [ '--color', '--noiconlabels' ], 'data': '$(json_escape $(cat data/cs_001.data))' }" > tmp/request.json
+
+    $ curl -X POST -H 'Content-Type:application/json' \
+      --data args='["--color", "noiconlabels"]' \
+      --data-urlencode data@madeline/data/cs_001.data http://localhost:5000/submit
+
+    $ curl -X POST \
+      --data-urlencode data@madeline/data/cs_001.data http://localhost:5000/submit
 
 
 
