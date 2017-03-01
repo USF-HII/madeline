@@ -1,40 +1,4 @@
 {
   "args": [ "--color", "--noiconlabels" ],
-  "data": "<madeline-xml><table>
-           <row>
-              <d>Individualid</d>
-              <d>Familyid</d>
-              <d>Gender</d>
-              <d>Mother</d>
-              <d>Father</d>
-            </row>
-            <row>
-              <d>m100</d>
-              <d>cs_001</d>
-              <d>m</d>
-              <d>.</d>
-              <d>.</d>
-            </row>
-            <row>
-              <d>m101</d>
-              <d>cs_001</d>
-              <d>f</d>
-              <d>.</d>
-              <d>.</d>
-            </row>
-            <row>
-              <d>m102</d>
-              <d>cs_001</d>
-              <d>m</d>
-              <d>m101</d>
-              <d>m100</d>
-            </row>
-            <row>
-              <d>m103</d>
-              <d>cs_001</d>
-              <d>f</d>
-              <d>m101</d>
-              <d>m100</d>
-            </row>
-            </table></madeline-xml>"
+  "data": "<madeline-xml><table><row><d>Individualid</d><d>Familyid</d><d>Gender</d><d>Mother</d><d>Father</d></row><row><d>m100</d><d>cs_001</d><d>m</d><d>.</d><d>.</d></row><row><d>m101</d><d>cs_001</d><d>f</d><d>.</d><d>.</d></row><row><d>m102</d><d>cs_001</d><d>m</d><d>m101</d><d>m100</d></row><row><d>m103</d><d>cs_001</d><d>f</d><d>m101</d><d>m100</d></row></table></madeline-xml>"
 }
