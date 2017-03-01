@@ -28,7 +28,7 @@ Response:
 
     <git_url> - <datestamp_of_commit>
 
-Example:
+#### Examples
 
     $ curl http://<app>/version
 
@@ -72,7 +72,7 @@ Response (Error):
       'command_output': <command_output>
     }
 
-Example:
+#### Examples
 
 *Note: Test data available at:* http://madeline.med.umich.edu/madeline/testdata/
 
