@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  madeline-service:
+    build: madeline/service
+    image: madeline-service
+    command: python app.py
+    ports:
+     - "5000:5000"
+    environment:
+     - APP=madeline-service
+
+  madeline-client:
+    build: madeline/client
+    image: madeline-client
+    command: tail -f /dev/null
+    environment:
+     - APP=madeline-client

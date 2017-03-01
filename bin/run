@@ -42,24 +42,11 @@ run_test_version() {
   echo curl http://localhost:${port}/version | bash -x
 }
 
+# main
 
-CONTAINER_NAME=madeline
-IMAGE_NAME=madeline
+export BASE=$(readlink -f $(dirname $0)/..)
 
-case $1 in
-  build)
-    run_build
-    ;;
-  container)
-    run_container
-    ;;
-  test)
-    run_build
-    run_container
-    run_test_version
-    run_test_submit
-    ;;
-  *) usage
-    ;;
-esac
+docker-compose build
+
+docker-compose up -d
 
