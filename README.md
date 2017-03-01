@@ -5,8 +5,6 @@ Madeline 2.0 Pedigree Drawing Engine (http://madeline.med.umich.edu/madeline).
 
 ## API
 
----
-
 ### Version
 
 Returns version (Github Commit SHA and Date) of compiled madeline PDE binary.
