@@ -113,6 +113,6 @@ Response (Error):
         "tmp/2ff66bac-07d8-41d2-a7c2-ae3d194840f6/output",
         "tmp/2ff66bac-07d8-41d2-a7c2-ae3d194840f6/2ff66bac-07d8-41d2-a7c2-ae3d194840f6.txt"
       ],
-      "command_output": "┌─────────────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc."
+      "command_output": "┌────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc."
     }
 
