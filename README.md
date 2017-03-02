@@ -48,12 +48,12 @@ Submit data and command line arguments to render a pedigree diagram
 
 ##### POST
 
-Parameters:
+JSON Parameters:
 
     {
-      'data': <text>,                 # The text or XML for madeline to use as input to render the diagram
-      'arguments': [<arg>, <arg...>]  # List of command line arguments to pass to the madeline PDE binary
-    {
+      'data': <text>,            # Tab-separated/XML data
+      'args': [<arg>, <arg...>]  # Madeline PDE command line arguments
+    }
 
 Response (Success):
 
