@@ -8,7 +8,11 @@ RUN pwd
 
 RUN mkdir /app
 
-RUN apt-get update && apt-get install -y gettext vim
+RUN apt-get update \
+      && apt-get install -y --force-yes --no-install-recommends \
+           gettext \
+           vim \
+      && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 
@@ -31,10 +35,10 @@ RUN git clone ${madeline_git_url} madeline \
 
 WORKDIR /app
 
-ADD requirements.txt requirements.txt
+COPY madeline/requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-ADD . .
+COPY madeline/. .
 
 CMD ["python", "app.py"]

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   app:
-    build: madeline
+    build: .
     image: madeline
     container_name: madeline-app
     command: gunicorn --bind 0.0.0.0:5000 --workers 8 server:app
