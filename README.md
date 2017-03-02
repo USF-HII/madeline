@@ -50,15 +50,16 @@ Submit data and command line arguments to render a pedigree diagram
 
 Parameters:
 
-- `data` - The text or XML for madeline to use as input to render the diagram
-
-- `args` - List of command line arguments to pass to the madeline PDE binary
+    {
+      'data': <text>,                 # The text or XML for madeline to use as input to render the diagram
+      'arguments': [<arg>, <arg...>]  # List of command line arguments to pass to the madeline PDE binary
+    {
 
 Response (Success):
 
     {
       'status': 'success',
-      'svg': <svg_data>,
+      'data': <svg_xml>,
       'command': <command>,
       'command_output': <command_output>
     }
@@ -67,7 +68,7 @@ Response (Error):
 
     {
       'status': 'error',
-      'reason': <reason_code>,
+      'data': <error_information>,
       'command': <command>,
       'command_output': <command_output>
     }
@@ -94,16 +95,16 @@ Response (Error):
     m114	cs_001	f	m105	m106
     m112	cs_001	m	m105	m106
 
-
     $ cat madeline/data/request-with-tsv.json
     {
       "args": [ "--color", "--noiconlabels" ],
       "data": "Individualid\tFamilyid\tGender\tMother\tFather\nm100\tcs_001\tm\t.\t.\nm101\tcs_001\tf\t...etc."
     }
 
-
     $ curl -X POST -d @madeline/data/request-with-tsv.json http://localhost:5000/submit
     {
+      "status": "success",
+      "svg": "<?xml version=\"1.0\" standalone=\"no\"?>\n <svg version=\"1.1\"  id=\"svgDC\" xmlns=...etc.",
       "command": [
         "madeline2",
         "--color",
@@ -112,8 +113,6 @@ Response (Error):
         "tmp/2ff66bac-07d8-41d2-a7c2-ae3d194840f6/output",
         "tmp/2ff66bac-07d8-41d2-a7c2-ae3d194840f6/2ff66bac-07d8-41d2-a7c2-ae3d194840f6.txt"
       ],
-      "message": "",
-      "output": "┌─────────────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc.",
-      "status": "success",
-      "svg": "<?xml version=\"1.0\" standalone=\"no\"?>\n <svg version=\"1.1\"  id=\"svgDC\" xmlns=...etc."
+      "command_output": "┌─────────────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc."
     }
+
