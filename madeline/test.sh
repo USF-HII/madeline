@@ -20,3 +20,5 @@ test_version() {
 test_submit
 
 test_version
+
+python client.py
