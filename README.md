@@ -5,14 +5,14 @@ Madeline 2.0 Pedigree Drawing Engine (http://madeline.med.umich.edu/madeline).
 
 ## Build
 
-1. Install docker-engine (https://docs.docker.com/engine/installation/)
-
-2. Install docker-compose (https://docs.docker.com/compose/install/)
-
-3. Run `./bin/test` which will:
-  - a. Build a docker image of `madeline:latest`
-  - b. Run `docker-compose up` starting the `madeline-app` and `madeline-client` containers
-  - c. Run `docker exec madeline-client ./test.sh` to run the test suite
+- 1. Install docker-engine (https://docs.docker.com/engine/installation/)
+- 2. Install docker-compose (https://docs.docker.com/compose/install/)
+- 3. Execute `./bin/test` running steps:
+  - a. Build a docker image of `madeline` tagged `test-madeline:latest`
+  - b. Run `docker-compose up` using base image `madeline` to start containers:
+    - `test-madeline-app`
+    - `test-madeline-client`
+  - c. Run `docker exec test-madeline-client ./test.sh` to run the test suite
 
 ## API
 
