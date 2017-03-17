@@ -3,38 +3,15 @@
 Web service to generate pedigree diagrams utilizing the
 Madeline 2.0 Pedigree Drawing Engine (http://madeline.med.umich.edu/madeline).
 
+## Build
+
+1. Install docker-engine-ce 17.03 or higher (https://docs.docker.com/engine/installation/)
+
+2. Install docker-compose (https://docs.docker.com/compose/install/)
+
+3. Run make
+
 ## API
-
-### Version
-
-Returns version (Github Commit SHA and Date) of compiled madeline PDE binary.
-
-The madeline PDE binary is compiled from the Madeline PDE source code
-located at https://github.com/piratical/Madeline_2.0_PDE.
-
-#### URL
-
-`http://<app>/version`
-
-#### Methods
-
-##### GET
-
-Parameters:
-
-    None
-
-Response:
-
-    <git_url> - <datestamp_of_commit>
-
-#### Examples
-
-    $ curl http://<app>/version
-
-    https://github.com/piratical/Madeline_2.0_PDE/tree/8ab82ad - 2016-12-21 00:38:52 -0500
-
----
 
 ### Submit
 
@@ -95,13 +72,13 @@ Response (Error):
     m114	cs_001	f	m105	m106
     m112	cs_001	m	m105	m106
 
-    $ cat madeline/data/request-with-tsv.json
+    $ cat madeline/tests/data/request-with-tsv.json
     {
       "args": [ "--color", "--noiconlabels" ],
       "data": "Individualid\tFamilyid\tGender\tMother\tFather\nm100\tcs_001\tm\t.\t.\nm101\tcs_001\tf\t...etc."
     }
 
-    $ curl -X POST -d @madeline/data/request-with-tsv.json http://localhost:5000/submit
+    $ curl -X POST -d @madeline/tests/data/request-with-tsv.json http://localhost:5000/submit
     {
       "status": "success",
       "svg": "<?xml version=\"1.0\" standalone=\"no\"?>\n <svg version=\"1.1\"  id=\"svgDC\" xmlns=...etc.",
@@ -116,3 +93,33 @@ Response (Error):
       "command_output": "┌────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc."
     }
 
+### Version
+
+Returns version (Github Commit SHA and Date) of compiled madeline PDE binary.
+
+The madeline PDE binary is compiled from the Madeline PDE source code
+located at https://github.com/piratical/Madeline_2.0_PDE.
+
+#### URL
+
+`http://<app>/version`
+
+#### Methods
+
+##### GET
+
+Parameters:
+
+    None
+
+Response:
+
+    <git_url> - <datestamp_of_commit>
+
+#### Examples
+
+    $ curl http://<app>/version
+
+    https://github.com/piratical/Madeline_2.0_PDE/tree/8ab82ad - 2016-12-21 00:38:52 -0500
+
+---

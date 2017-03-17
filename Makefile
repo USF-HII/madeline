@@ -1,2 +1,2 @@
 all:
-	bin/run test
+	bin/test

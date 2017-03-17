@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import requests
+import json
 
-url = "http://madeline-service:5000"
+url = "http://app:5000"
 
 r = requests.get('{url}/version'.format(url=url))
 
@@ -13,9 +14,9 @@ with open('cs_001.data') as f:
 
 payload = { 'data': data }
 
-r = requests.post('{url}/submit'.format(url=url), data=payload)
+payload = { 'data': 'ban!man' }
 
-r.
+r = requests.post('{url}/submit'.format(url=url), data=json.dumps(payload))
 
 with open('output.svg', 'w') as f:
      f.write(r.json()['svg'])

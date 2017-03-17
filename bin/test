@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export BASE=$(readlink -f $(dirname $0)/..)
+
+docker-compose build
+
+docker-compose up -d
+
+docker exec madeline-client ./test.sh
+
+# docker-compose down
