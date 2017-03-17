@@ -5,7 +5,7 @@ Madeline 2.0 Pedigree Drawing Engine (http://madeline.med.umich.edu/madeline).
 
 ## Build
 
-1. Install docker-engine-ce 11.x or higher (https://docs.docker.com/engine/installation/)
+1. Install docker-engine (https://docs.docker.com/engine/installation/)
 
 2. Install docker-compose (https://docs.docker.com/compose/install/)
 
