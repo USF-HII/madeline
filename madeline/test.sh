@@ -7,7 +7,7 @@ cmd() {
 }
 
 jq_filter() {
-   jq '.. |= (if type == "string" then .[0:102] else . end)'
+  jq '.. |= (if type == "string" then .[0:102] else . end)'
 }
 
 test_submit() {
