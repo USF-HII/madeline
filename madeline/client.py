@@ -9,7 +9,7 @@ r = requests.get('{url}/version'.format(url=url))
 
 print(r.text)
 
-with open('tests/data/cs_001.data') as f:
+with open('tests/data/examples/cs_001.data') as f:
     data = f.read()
 
 payload = { 'data': data,
