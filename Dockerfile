@@ -41,4 +41,4 @@ RUN pip install -r requirements.txt
 
 COPY madeline/. .
 
-CMD ["python", "app.py"]
+CMD ["gunicorn", "--bind=0.0.0.0:5000", "--workers=8", "server:app"]
