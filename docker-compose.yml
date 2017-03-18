@@ -1,3 +1,5 @@
+# NOTE: Make sure to add the suffix for any new services added to the "docker rm" section at the end in madeline/test.sh
+
 version: "3"
 
 services:

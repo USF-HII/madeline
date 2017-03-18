@@ -6,6 +6,8 @@ docker-compose build
 
 docker-compose up -d
 
-docker exec madeline-client ./test.sh
+docker exec -it madeline-client ./test.sh
 
-docker-compose down
+for n in app client; do
+  docker rm --force --volumes $(docker ps -q --filter=name=madeline-${n})
+done

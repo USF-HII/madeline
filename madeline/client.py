@@ -7,8 +7,6 @@ url = "http://app:5000"
 
 r = requests.get('{url}/version'.format(url=url))
 
-print(r.text)
-
 with open('tests/data/examples/cs_001.data') as f:
     data = f.read()
 
@@ -20,4 +18,3 @@ payload = { 'data': data,
 
 r = requests.post('{url}/submit'.format(url=url), data=json.dumps(payload))
 
-print(r.text)

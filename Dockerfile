@@ -12,6 +12,8 @@ RUN apt-get update \
       && apt-get install -y --force-yes --no-install-recommends \
            gettext \
            vim \
+           jq \
+           git \
       && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build

@@ -14,22 +14,22 @@ def cli(cmd_args, timeout=None):
     try:
         output = subprocess.check_output(cmd_args, stderr=subprocess.STDOUT, timeout=timeout)
         result['status'] = 'success'
-        result['message'] = ''
         result['output'] = output.decode(decode_method)
 
     except subprocess.CalledProcessError as e:
         result['status'] = 'error'
-        result['message'] = str(e)
         result['output'] = e.output.decode(decode_method)
+        result['data'] = 'returncode: {returncode}'.format(e.output.decode)
 
     except subprocess.TimeoutExpired as e:
         message = 'subprocess.check_output({cmd_args}, timeout={timeout}) threw exception TimeoutExpired'
         result['status'] = 'error'
-        result['message'] = message.format(cmd_args=cmd_args, timeout=timeout)
         result['output'] = e.output.decode(decode_method)
+        result['data'] = 'timeout ({timeout}) expired'.format(timeout=timeout)
 
-    except:
+    except Exception as e:
         result['status'] = 'error'
+        result['output'] = str(e)
 
     logging.info('cli.result: %s' % result)
 
@@ -83,9 +83,12 @@ def route_run():
 
     result['command'] = command
 
-    if result['status'] == 'success':
+    if result['status'] == 'success' and os.path.isfile(output_prefix + '.svg'):
         with open(output_prefix + '.svg') as f:
-            result['svg'] = f.read()
+            result['data'] = f.read()
+    else:
+        result['status'] = 'error'
+        result['data'] = result.get('data', '')
 
     return flask.jsonify(result)
 

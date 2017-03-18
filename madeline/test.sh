@@ -6,19 +6,30 @@ cmd() {
   "$@"
 }
 
-test_submit() {
-  cmd curl -s -X POST --data @tests/data/request-with-tsv.json http://app:5000/submit
+jq_filter() {
+   jq '.. |= (if type == "string" then .[0:102] else . end)'
+}
 
-    #--custom-icon-colors 'ALS=red,PLS=purple,PMA=blue,HSP=green;A=black;FTD=black,Non-FTD=lightgray;A=black'" \
-    #--data-urlencode args="--color --nolabeltruncation" \
+test_submit() {
+  cmd curl -s -X POST --data @tests/data/request-with-tsv.json http://app:5000/submit | jq_filter
+}
+
+test_submit_bad() {
+  cmd curl -s -X POST --data @tests/data/bad-request-with-xml.json http://app:5000/submit | jq_filter
 }
 
 test_version() {
   cmd curl -s http://app:5000/version
 }
 
+echo 1>&2
+echo "running python client.py" 1>&2
+
+python client.py
+
 test_submit
+
+test_submit_bad
 
 test_version
 
-python client.py
