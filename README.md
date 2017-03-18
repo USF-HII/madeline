@@ -18,7 +18,10 @@ Madeline 2.0 Pedigree Drawing Engine (http://madeline.med.umich.edu/madeline).
 
 ### Submit
 
-Submit data and command line arguments to render a pedigree diagram
+Submit data and command line arguments to render a pedigree diagram.
+
+Arguments may be provided other than `--outputprefix', `--outputext`, or the path
+to the input file which are provided internally to the `madeline2` binary by the service.
 
 #### URL
 
