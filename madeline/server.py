@@ -109,7 +109,7 @@ def route_run():
     job_id = str(uuid.uuid4())
 
     work_dir = 'tmp/{job_id}'.format(job_id=job_id)
-    data_file = os.path.join(work_dir, job_id + '.txt')
+    data_file = os.path.join(work_dir,'input.txt')
     output_prefix = os.path.join(work_dir, 'output')
 
 
