@@ -20,7 +20,7 @@ def cli(cmd_args, timeout=None):
     except subprocess.CalledProcessError as e:
         result['status'] = 'error'
         result['output'] = e.output.decode(decode_method)
-        result['data'] = 'returncode: {rc}'.format(rc=e.output.returncode)
+        result['data'] = 'returncode: {rc}'.format(rc=e.returncode)
 
     except subprocess.TimeoutExpired as e:
         message = 'subprocess.check_output({cmd_args}, timeout={timeout}) threw exception TimeoutExpired'
