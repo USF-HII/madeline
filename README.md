@@ -44,7 +44,7 @@ Response (Success):
       'status': 'success',
       'data': <svg_xml>,
       'command': <command>,
-      'command_output': <command_output>
+      'output': <command_output>
     }
 
 Response (Error):
@@ -53,7 +53,7 @@ Response (Error):
       'status': 'error',
       'data': <error_information>,
       'command': <command>,
-      'command_output': <command_output>
+      'output': <command_output>
     }
 
 #### Examples
@@ -96,7 +96,7 @@ Response (Error):
         "tmp/2ff66bac-07d8-41d2-a7c2-ae3d194840f6/output",
         "tmp/2ff66bac-07d8-41d2-a7c2-ae3d194840f6/2ff66bac-07d8-41d2-a7c2-ae3d194840f6.txt"
       ],
-      "command_output": "┌────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc."
+      "output": "┌────────────────────┐\n│ Welcome to Madeline 2.0 PDE │\n└──────────────────...etc."
     }
 
 ### Version
