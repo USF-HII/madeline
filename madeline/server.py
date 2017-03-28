@@ -61,11 +61,9 @@ def route_version():
 def route_run():
     job_id = str(uuid.uuid4())
 
-    work_dir = 'tmp/{job_id}'.format(job_id=job_id)
-    data_file = os.path.join(work_dir,'input.txt')
-    output_prefix = os.path.join(work_dir, 'output')
-
-    os.makedirs(work_dir)
+    work_dir= 'tmp'
+    data_file = os.path.join(work_dir, '{job_id}.txt'.format(job_id=job_id))
+    output_prefix = os.path.join(work_dir, '{job_id}'.format(job_id=job_id))
 
     json_data = flask.request.get_json(force=True)
 
@@ -86,9 +84,14 @@ def route_run():
     if result['status'] == 'success' and os.path.isfile(output_prefix + '.svg'):
         with open(output_prefix + '.svg') as f:
             result['data'] = f.read()
+        os.remove(output_prefix + '.svg')
+
     else:
         result['status'] = 'error'
         result['data'] = result.get('data', '')
+
+    if os.path.isfile(data_file):
+        os.remove(data_file)
 
     return flask.jsonify(result)
 
